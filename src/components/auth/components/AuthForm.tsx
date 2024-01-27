@@ -24,7 +24,7 @@ const AuthForm = () => {
 
   useEffect(() => {
     if (session?.status === 'authenticated') {
-      router.push('/conversations');
+      router.push('/home');
     }
   }, [session?.status, router]);
 
@@ -45,6 +45,7 @@ const AuthForm = () => {
       name: '',
       email: '',
       password: '',
+      role: 'GUESS',
     },
   });
 
@@ -84,7 +85,7 @@ const AuthForm = () => {
           }
 
           if (callback?.ok) {
-            router.push('/conversations');
+            router.push('/home');
           }
         })
         .finally(() => setIsLoading(false));

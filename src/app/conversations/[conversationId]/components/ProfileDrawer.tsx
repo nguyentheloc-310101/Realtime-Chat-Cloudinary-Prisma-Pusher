@@ -11,6 +11,8 @@ import AvatarGroup from '@/components/AvatarGroup';
 import useOtherUser from '@/hooks/useOtherUser';
 import useActiveList from '@/hooks/useActiveList';
 import Avatar from '@/components/Avatar';
+import { Descriptions, DescriptionsProps } from 'antd';
+import useUserInput from '@/stores/user-input';
 
 interface ProfileDrawerProps {
   isOpen: boolean;
@@ -25,6 +27,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
   onClose,
   data,
 }) => {
+  const { place, dateRange } = useUserInput();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const otherUser = useOtherUser(data);
 
@@ -46,7 +49,28 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
 
     return isActive ? 'Active' : 'Offline';
   }, [data, isActive]);
-
+  const items: DescriptionsProps['items'] = [
+    {
+      key: '1',
+      label: 'Place travel',
+      children: <div>{place}</div>,
+    },
+    {
+      key: '2',
+      label: 'Name of Host  plan',
+      children: 'KD7',
+    },
+    {
+      key: '3',
+      label: 'Date',
+      children: (
+        <div className="flex flex-col ">
+          <div>from: {dateRange.start}</div>
+          <div>to: {dateRange.end}</div>
+        </div>
+      ),
+    },
+  ];
   return (
     <>
       <ConfirmModal
@@ -204,6 +228,15 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                                 </>
                               )}
                             </dl>
+                          </div>
+                          <div className="text-[20px] font-bold">
+                            Plan for travel
+                          </div>
+                          <div>
+                            <Descriptions
+                              title={<div>Plan info</div>}
+                              items={items}
+                            />
                           </div>
                         </div>
                       </div>

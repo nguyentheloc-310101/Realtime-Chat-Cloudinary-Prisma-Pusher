@@ -3,12 +3,30 @@
 import { User } from '@prisma/client';
 
 import UserBox from './UserBox';
+import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
+import getCurrentUser from '@/app/actions/getCurrentUser';
 
 interface UserListProps {
   items: User[];
+  currentUser: User;
 }
 
-const UserList: React.FC<UserListProps> = ({ items }) => {
+const UserList: React.FC<UserListProps> = ({ items, currentUser }) => {
+  const [formatItems, setFormatItems] = useState<any[]>([]);
+
+  useEffect(() => {
+    const checkRole = async () => {
+      if (currentUser?.role == 'GUESS') {
+        const onlyAdmin = items.filter((item) => item?.role == 'ADMIN');
+        setFormatItems(onlyAdmin);
+        console.log('onlyAdmin', onlyAdmin);
+      } else {
+        setFormatItems(items);
+      }
+    };
+    checkRole();
+  }, [currentUser?.role, items]);
   return (
     <aside
       className="
@@ -36,7 +54,7 @@ const UserList: React.FC<UserListProps> = ({ items }) => {
             People
           </div>
         </div>
-        {items.map((item) => (
+        {formatItems.map((item) => (
           <UserBox
             key={item.id}
             data={item}

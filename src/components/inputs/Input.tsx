@@ -46,8 +46,9 @@ const Input: React.FC<InputProps> = ({
             `
             form-input
             block 
+            px-2
             w-full 
-            rounded-md 
+            rounded-md s
             border-0 
             py-1.5 
             text-gray-900 
