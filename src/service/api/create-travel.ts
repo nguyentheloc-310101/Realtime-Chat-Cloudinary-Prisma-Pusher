@@ -10,7 +10,7 @@ interface IPlaceAdd {
 export async function createTravel(param: IPlaceAdd) {
   try {
     await axios({
-      url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/${process.env.NEXT_PUBLIC_API_REGISTER}`,
+      url: `${process.env.NEXT_PUBLIC_API_ENDPOINT}/${process.env.NEXT_PUBLIC_API_TRAVEL}`,
       method: 'POST',
       data: param,
       headers: {

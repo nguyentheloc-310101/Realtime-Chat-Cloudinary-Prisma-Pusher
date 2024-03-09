@@ -1,18 +1,17 @@
 'use client';
 
+import GroupChatModal from '@/components/modals/GroupChatModal';
+import useConversation from '@/hooks/useConversation';
+import { pusherClient } from '@/libs/pusher';
+import { FullConversationType } from '@/types';
 import { User } from '@prisma/client';
-import { useRouter } from 'next/navigation';
+import clsx from 'clsx';
+import { find } from 'lodash';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { MdOutlineGroupAdd } from 'react-icons/md';
-import clsx from 'clsx';
-import { find, uniq } from 'lodash';
-import { pusherClient } from '@/libs/pusher';
 import ConversationBox from './ConversationBox';
-import { FullConversationType } from '@/types';
-import useConversation from '@/hooks/useConversation';
-import GroupChatModal from '@/components/modals/GroupChatModal';
-import useUserInput from '@/stores/user-input';
 
 interface ConversationListProps {
   initialItems: FullConversationType[];
