@@ -11,9 +11,7 @@ import {
   Upload,
   message,
 } from 'antd';
-import * as LR from '@uploadcare/blocks';
 
-LR.registerBlocks(LR);
 import { PlusOutlined } from '@ant-design/icons';
 import { useEffect, useRef, useState } from 'react';
 const { TextArea } = Input;
@@ -22,25 +20,7 @@ export const FormInputPlace = () => {
   const [items, setItems] = useState(['Beach', 'River']);
   const [name, setName] = useState('');
   const inputRef = useRef<InputRef>(null);
-  const [files, setFiles] = useState<LR.OutputFileEntry<'success'>[]>([]);
-  const ctxProviderRef = useRef<InstanceType<LR.UploadCtxProvider>>(null);
 
-  useEffect(() => {
-    const ctxProvider = ctxProviderRef.current;
-    if (!ctxProvider) return;
-
-    const handleChangeEvent = (e: LR.EventMap['change']) => {
-      console.log('change event payload:', e);
-
-      setFiles([
-        ...e.detail.allEntries.filter((f) => f.status === 'success'),
-      ] as LR.OutputFileEntry<'success'>[]);
-    };
-    ctxProvider.addEventListener('change', handleChangeEvent);
-    return () => {
-      ctxProvider.removeEventListener('change', handleChangeEvent);
-    };
-  }, [setFiles]);
   const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value == '') {
       message.warning('Please input category name!');
